@@ -9,60 +9,86 @@
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(#bde0ff, #e8f5ff);
     font-family: Arial, sans-serif;
     text-align: center;
-    color: #444;
+    background: linear-gradient(#bde0ff, #ffd6e7);
+    overflow-x: hidden;
 }
 
-.container {
+.pantalla {
+    display: none;
+    min-height: 100vh;
     padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+.activa {
+    display: block;
 }
 
 h1 {
-    color: #ff4f9a;
-    font-size: 40px;
+    color: #ff4081;
+    font-size: 38px;
+}
+
+p {
+    font-size: 21px;
+    color: #444;
+    line-height: 1.6;
+}
+
+button {
+    background: #ff6fae;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 18px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #ff3f8e;
 }
 
 .corazon {
-    font-size: 60px;
-    animation: latir 1s infinite;
+    font-size: 70px;
+    animation: latido 1s infinite;
 }
 
-@keyframes latir {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+@keyframes latido {
+    50% {
+        transform: scale(1.2);
+    }
 }
 
 .carta {
     background: white;
+    padding: 25px;
+    border-radius: 25px;
     max-width: 600px;
     margin: auto;
-    padding: 30px;
-    border-radius: 20px;
     box-shadow: 0 0 20px #aaa;
-    font-size: 20px;
-    line-height: 1.6;
 }
 
-.boton {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 15px 30px;
-    background: #ff6fae;
-    color: white;
-    text-decoration: none;
-    border-radius: 30px;
-    font-size: 18px;
+.corazon-flotante {
+    position: fixed;
+    animation: subir 5s linear infinite;
+    font-size: 25px;
 }
 
-.boton:hover {
-    background: #ff3f8e;
+@keyframes subir {
+    from {
+        bottom: -50px;
+    }
+    to {
+        bottom: 100%;
+    }
 }
 
-.rosa {
-    font-size: 35px;
+.secreto {
+    display: none;
 }
 </style>
 
@@ -70,56 +96,154 @@ h1 {
 
 <body>
 
-<div class="container">
+<div class="pantalla activa" id="inicio">
 
 <div class="corazon">❤️</div>
 
 <h1>Para Evelin ❤️</h1>
 
 <div class="carta">
-
 <p>
-Evelin, hice esta pequeña página para ti,
-porque quería crear algo diferente y especial.
+Evelin, encontraste una pequeña sorpresa hecha con mucho cariño 🌹
 </p>
 
 <p>
-No es solo un mensaje, es un pequeño recuerdo
-hecho con mucho cariño, para que sepas lo importante
-que eres para mí. ❤️
+Pero tendrás que descubrirla...
+</p>
+
+<button onclick="ir('juego')">
+Comenzar aventura 🎁
+</button>
+
+</div>
+
+</div>
+
+
+<div class="pantalla" id="juego">
+
+<h1>Nivel 1 💕</h1>
+
+<div class="carta">
+
+<p>
+¿Quién hizo esta sorpresa para ti? ❤️
+</p>
+
+<button onclick="correcto()">
+Josii ❤️
+</button>
+
+<button onclick="incorrecto()">
+Alguien más 😅
+</button>
+
+</div>
+
+</div>
+
+
+<div class="pantalla" id="nivel2">
+
+<h1>Nivel 2 🌹</h1>
+
+<div class="carta">
+
+<p>
+Encontraste una pista...
 </p>
 
 <p>
-Gracias por cada momento, por cada sonrisa
-y por todas esas pequeñas cosas que hacen
-que seas una persona especial.
+Hay un regalo escondido esperando por ti 🎁
+</p>
+
+<button onclick="abrir()">
+Abrir regalo ✨
+</button>
+
+</div>
+
+</div>
+
+
+<div class="pantalla" id="final">
+
+<h1>❤️ Para Evelin ❤️</h1>
+
+<div class="carta">
+
+<p>
+Llegaste al final de la aventura 🌹
 </p>
 
 <p>
-Espero que cuando veas esto puedas sentir
-todo el cariño con el que fue creado. 🌹
+Gracias por tomarte el tiempo de descubrir esta pequeña sorpresa.
 </p>
 
-<div class="rosa">🌹✨❤️✨🌹</div>
+<button onclick="secreto()">
+Buscar secreto 🤫
+</button>
+
+
+<div id="mensajeSecreto" class="secreto">
+
+<h2>💕 Mi secreto 💕</h2>
 
 <p>
-Con mucho cariño:
+Te amo mi niña bonita ❤️<br>
+Te amooo muchooo 💕<br>
+Sos la persona más bonita y especial 🌹<br>
+Te amo, te adoro y quiero siempre estar contigo 💕<br>
 <br>
-<strong>Josii ❤️</strong>
+❤️ Te amoooo ❤️
 </p>
 
 </div>
 
-<a class="boton" href="#" onclick="mensaje()">
-Presiona aquí ❤️
-</a>
+</div>
 
 </div>
+
 
 <script>
-function mensaje(){
-    alert("Evelin ❤️ Nunca olvides lo especial que eres. Gracias por existir 🌹");
+
+function ir(pagina){
+    document.querySelectorAll(".pantalla").forEach(x=>{
+        x.classList.remove("activa");
+    });
+
+    document.getElementById(pagina).classList.add("activa");
 }
+
+
+function correcto(){
+    ir("nivel2");
+}
+
+
+function incorrecto(){
+    alert("Pista: alguien que te quiere mucho ❤️");
+}
+
+
+function abrir(){
+    ir("final");
+}
+
+
+function secreto(){
+    document.getElementById("mensajeSecreto").style.display="block";
+
+    for(let i=0;i<20;i++){
+        let h=document.createElement("div");
+        h.innerHTML="❤️";
+        h.className="corazon-flotante";
+        h.style.left=Math.random()*100+"%";
+        h.style.animationDuration=(3+Math.random()*3)+"s";
+        document.body.appendChild(h);
+    }
+}
+
 </script>
 
 </body>
